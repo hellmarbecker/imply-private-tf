@@ -1,10 +1,14 @@
-output "instance_id" {
-  description = "ID of the EC2 instance"
-  value       = aws_instance.app_server.id
+output "public_dns_name" {
+  description = "Public DNS name of load balancer"
+  value       = module.elb_http.this_elb_dns_name
 }
 
-output "instance_public_ip" {
-  description = "Public IP address of the EC2 instance"
-  value       = aws_instance.app_server.public_ip
+output "vpc_arn" {
+  description = "ARN of the vpc"
+  value       = module.vpc.vpc_arn
 }
 
+output "instance_ids" {
+  description = "IDs of EC2 instances"
+  value       = aws_instance.imply-manager.id
+}
