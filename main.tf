@@ -128,3 +128,27 @@ resource "aws_instance" "imply-manager" {
   }
 }
 
+resource "aws_instance" "imply-node" {
+  ami           = data.aws_ami.amazon_linux.id
+  instance_type = var.instance_type["node"]
+
+  subnet_id              = module.vpc.public_subnets[0]
+  vpc_security_group_ids = [module.app_security_group.this_security_group_id]
+
+  key_name = "imply-keypair"
+
+  user_data = <<-EOF
+    #!/bin/bash
+    sudo yum update -y
+    curl -O https://static.imply.io/release/imply-agent-v3.tar.gz
+    tar -xvf imply-agent-2021.07.tar.gz
+    sudo imply-agent-2021.07/script/install
+    EOF
+
+  tags = {
+    Terraform   = "true"
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
+

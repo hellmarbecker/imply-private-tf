@@ -33,9 +33,7 @@ variable "instance_type" {
   type        = map(string)
   default     = {
     manager = "t2.micro",
-    master  = "t2.micro",
-    query   = "t2.micro",
-    data    = "t2.micro"
+    node    = "t2.micro"
   }
 }
 
@@ -44,9 +42,7 @@ variable "instance_count" {
   type        = map(number)
   default     = {
     manager = 1,
-    master  = 1,
-    query   = 1,
-    data    = 2
+    node    = 4
   }
 }
 
